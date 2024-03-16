@@ -413,11 +413,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\beck\miniforge3\envs\Jubook\python.exe
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\beck\miniforge3\envs\Astro24\python.exe
 </pre></div>
 </div>
 </div>
 </div>
+<p>The content for the current page can be downloaded here <code class="xref download docutils literal notranslate"><span class="pre">Planck</span></code>.</p>
+<p>To use the notebook press the rocket button!</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -429,15 +431,15 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">def</span> <span class="nf">Planck</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span> <span class="c1"># Function for Planck law</span>
-    <span class="c1"># Physikalische Größen alle in SI Einheiten: W, s, m, K</span>
+    <span class="c1"># All quantities in SI units: W, s, m, K</span>
     <span class="n">h</span> <span class="o">=</span> <span class="mf">6.626e-34</span>        <span class="c1"># Plancksches Wirkungsquantum</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="mf">3e8</span>              <span class="c1"># Lichtgeschwindigkeit</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">3e8</span>              <span class="c1"># Velocity of light</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mf">1.38e-23</span>         <span class="c1"># Boltzmann-Konstante</span>
 
     <span class="n">c1</span>  <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span>
     <span class="n">c2</span>  <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="n">k</span>
 
-    <span class="n">I_lam</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">/</span> <span class="p">(</span><span class="n">lam</span><span class="o">**</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c2</span> <span class="o">/</span> <span class="p">(</span><span class="n">lam</span><span class="o">*</span><span class="n">T</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>                            <span class="c1"># spektrale Strahlungsflussdichte</span>
+    <span class="n">I_lam</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">/</span> <span class="p">(</span><span class="n">lam</span><span class="o">**</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c2</span> <span class="o">/</span> <span class="p">(</span><span class="n">lam</span><span class="o">*</span><span class="n">T</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>      <span class="c1"># spectral radiation flux density </span>
     <span class="k">return</span> <span class="n">I_lam</span>
 
 <span class="n">min_L</span> <span class="o">=</span>  <span class="mf">200e-9</span>
@@ -461,7 +463,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" src="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" />
+<img alt="../_images/2a534a487ec068fc66ea138530e7766ccbce2a8f214ca99abbbca164ce26b405.png" src="../_images/2a534a487ec068fc66ea138530e7766ccbce2a8f214ca99abbbca164ce26b405.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -503,17 +505,19 @@ Solar constant = 1355 W/m²
 <span class="n">lam_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">380</span><span class="p">,</span> <span class="mi">780</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-9</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">I</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam_e</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$I(\lambda)$ black body T =&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;K&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">I</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam_e</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$V(\lambda)$ eye&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$\lambda$ / nm&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Light sensitivity curve of the human eye&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/9f6813761ec399740642b80d853141ad9cda411c5669295a13f41253150a1292.png" src="../_images/9f6813761ec399740642b80d853141ad9cda411c5669295a13f41253150a1292.png" />
+<img alt="../_images/4f33942b2013954b93ea1ab368737def652fb0889ad0dce74b12c333db904966.png" src="../_images/4f33942b2013954b93ea1ab368737def652fb0889ad0dce74b12c333db904966.png" />
 </div>
 </div>
 </section>
@@ -535,19 +539,20 @@ Solar constant = 1355 W/m²
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_41156</span>\<span class="mf">1204385265.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># we first create two interpolation functions for V and I, respectively</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">fint_I</span>   <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">fint_V</span>   <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam_e</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">eta</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fint_V</span><span class="p">(</span><span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">fint_I</span><span class="p">(</span><span class="n">lam</span><span class="p">))</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fint_I</span><span class="p">(</span><span class="n">lam</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Efficiency =&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">eta</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
-
-<span class="ne">AttributeError</span>: module &#39;scipy&#39; has no attribute &#39;interpolate&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Efficiency = 14 %
 </pre></div>
 </div>
 </div>
+</div>
+<div class="full-width admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How do the atmosphere changes the solar spectrum? Read for instance <a class="reference external" href="http://hyperphysics.phy-astr.gsu.edu/hbase/atmos/blusky.html">Rayleigh</a></p></li>
+<li><p>What is the characteristic law for Rayleigh scattering?</p></li>
+<li><p>How should we incorporate this into the above equations?</p></li>
+<li><p>Where is the radiation maximum of a tungsten lamp which operates at <span class="math notranslate nohighlight">\(T\)</span> = 2800 K?</p></li>
+<li><p>What is the efficiency of this lamp?</p></li>
+</ul>
 </div>
 </section>
 </section>
