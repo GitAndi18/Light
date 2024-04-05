@@ -5,5 +5,5 @@ format: jb-book
 root: intro
 chapters:
 - file: Intro_Licht
-  sections:
-  - file: Ch_1/Planck_240315
+- file: Ch_1/Planck_240315
+- file: Ch_1/SolidAngle_240405

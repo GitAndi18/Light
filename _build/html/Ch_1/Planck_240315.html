@@ -158,10 +158,8 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Intro_Licht.html">Light- and Daylighting</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Planck’s law</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../Intro_Licht.html">Light- and Daylighting</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Planck’s law</a></li>
 </ul>
 
     </div>
@@ -387,7 +385,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensivity-curve-of-the-human-eye-brightly-adapted">Sensivity curve of the human eye - brightly adapted</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#light-efficiency">Light Efficiency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#light-efficiency">Light Efficiency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-we-want-to-determine-the-energy-with-parts-of-the-solar-spectrum">Now we want to determine the energy with parts of the solar spectrum</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -406,14 +407,15 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load packages</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span>   <span class="c1"># which environment is used</span>
+<span class="c1">#!jupyter --version</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\beck\miniforge3\envs\Astro24\python.exe
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\beck\miniforge3\envs\Jubook\python.exe
 </pre></div>
 </div>
 </div>
@@ -463,7 +465,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/2a534a487ec068fc66ea138530e7766ccbce2a8f214ca99abbbca164ce26b405.png" src="../_images/2a534a487ec068fc66ea138530e7766ccbce2a8f214ca99abbbca164ce26b405.png" />
+<img alt="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" src="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -517,7 +519,7 @@ Solar constant = 1355 W/m²
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/4f33942b2013954b93ea1ab368737def652fb0889ad0dce74b12c333db904966.png" src="../_images/4f33942b2013954b93ea1ab368737def652fb0889ad0dce74b12c333db904966.png" />
+<img alt="../_images/937aa2e2a60b8f4a955c625346553b751e7f1980fb912b0460a118682be0efc1.png" src="../_images/937aa2e2a60b8f4a955c625346553b751e7f1980fb912b0460a118682be0efc1.png" />
 </div>
 </div>
 </section>
@@ -531,8 +533,8 @@ Solar constant = 1355 W/m²
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we first create two interpolation functions for V and I, respectively</span>
-<span class="n">fint_I</span>   <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
-<span class="n">fint_V</span>   <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam_e</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+<span class="n">fint_I</span>   <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">fint_V</span>   <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">lam_e</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
 <span class="n">eta</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fint_V</span><span class="p">(</span><span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">fint_I</span><span class="p">(</span><span class="n">lam</span><span class="p">))</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fint_I</span><span class="p">(</span><span class="n">lam</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Efficiency =&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">eta</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
 </pre></div>
@@ -554,6 +556,237 @@ Solar constant = 1355 W/m²
 <li><p>What is the efficiency of this lamp?</p></li>
 </ul>
 </div>
+<section id="now-we-want-to-determine-the-energy-with-parts-of-the-solar-spectrum">
+<h3>Now we want to determine the energy with parts of the solar spectrum<a class="headerlink" href="#now-we-want-to-determine-the-energy-with-parts-of-the-solar-spectrum" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">min_L</span> <span class="o">=</span>  <span class="mf">200e-9</span>
+<span class="n">max_L</span> <span class="o">=</span> <span class="mf">3000e-9</span>
+<span class="n">dL</span>    <span class="o">=</span>    <span class="mf">5e-9</span>
+<span class="n">NL</span>    <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">max_L</span> <span class="o">-</span> <span class="n">min_L</span><span class="p">)</span> <span class="o">/</span> <span class="n">dL</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">lam</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_L</span><span class="p">,</span> <span class="n">max_L</span><span class="p">,</span> <span class="n">NL</span><span class="p">)</span>
+<span class="n">T</span>     <span class="o">=</span> <span class="mi">5800</span>
+<span class="n">I</span>     <span class="o">=</span> <span class="n">Planck</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Spectral Solar Radiation Density, T =&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;K&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$\lambda$ / nm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$I(\lambda)$ / (W/m²/nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam</span> <span class="o">*</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1100x300 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" src="../_images/db65f61b7e9d7eb023980127733fcac7e83b5739a0ef30c639a0731c56c95183.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">RangeSlider</span>
+
+<span class="c1"># generate a fake image</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">19680801</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram of pixel intensities&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create the RangeSlider</span>
+<span class="n">slider_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">])</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">RangeSlider</span><span class="p">(</span><span class="n">slider_ax</span><span class="p">,</span> <span class="s2">&quot;Threshold&quot;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c1"># Create the Vertical lines on the histogram</span>
+<span class="n">lower_limit_line</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">upper_limit_line</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="c1"># The val passed to a callback by the RangeSlider will</span>
+    <span class="c1"># be a tuple of (min, max)</span>
+
+    <span class="c1"># Update the image&#39;s colormap</span>
+    <span class="n">im</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">vmin</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">im</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">vmax</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Update the position of the vertical lines</span>
+    <span class="n">lower_limit_line</span><span class="o">.</span><span class="n">set_xdata</span><span class="p">([</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="n">upper_limit_line</span><span class="o">.</span><span class="n">set_xdata</span><span class="p">([</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+    <span class="c1"># Redraw the figure to ensure it updates</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
+
+
+<span class="n">slider</span><span class="o">.</span><span class="n">on_changed</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/54b7cf3d8111f4d257fb03825999f136b5ea6e76d5cddd05c8d065276539682a.png" src="../_images/54b7cf3d8111f4d257fb03825999f136b5ea6e76d5cddd05c8d065276539682a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> ipympl
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">lam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-9</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5800</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">Planck</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">100e-9</span><span class="p">,</span> <span class="mf">30000e-9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="c1">#ax.set_xscale(&#39;log&#39;)</span>
+
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">T</span> <span class="o">=</span> <span class="mi">5800</span><span class="p">):</span>
+    <span class="n">line</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">Planck</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">T</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">interact</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "a9a7b51277c341ffaf76273c73539738"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> ipympl
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">RangeSlider</span>
+
+<span class="n">lam</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-9</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5800</span>
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">400e-9</span><span class="p">,</span> <span class="mf">700e-9</span><span class="p">])</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lam</span><span class="p">,</span> <span class="n">Planck</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">200e-9</span><span class="p">,</span> <span class="mf">3000e-9</span><span class="p">)</span>
+<span class="c1">#ax.set_yscale(&#39;log&#39;)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="c1">#ax.set_xscale(&#39;log&#39;)</span>
+
+<span class="c1"># Create the RangeSlider</span>
+<span class="n">slider_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">])</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">RangeSlider</span><span class="p">(</span><span class="n">slider_ax</span><span class="p">,</span> <span class="s2">&quot;$\lambda$ / nm&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+
+<span class="c1"># Create the Vertical lines on the histogram</span>
+<span class="n">lower_limit_line</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">upper_limit_line</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">slider</span><span class="o">.</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="n">lower_limit_line</span><span class="o">.</span><span class="n">set_xdata</span><span class="p">([</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">])</span>
+    <span class="n">upper_limit_line</span><span class="o">.</span><span class="n">set_xdata</span><span class="p">([</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1e-9</span><span class="p">])</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span>
+    <span class="c1">#plt.show()</span>
+    
+<span class="c1">#interact(update);</span>
+<span class="n">slider</span><span class="o">.</span><span class="n">on_changed</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "5d97629209c544f1b1aaa6ac7ef80ed2"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0005</span><span class="p">,</span><span class="mf">0.0069</span><span class="p">,</span>
+<span class="mf">0.0122</span>
+<span class="mf">0.0145</span>
+<span class="mf">0.0177</span>
+<span class="mf">0.0235</span>
+<span class="mf">0.0268</span>
+<span class="mf">0.0294</span>
+<span class="mf">0.0343</span>
+<span class="mf">0.0339</span>
+<span class="mf">0.0326</span>
+<span class="mf">0.0318</span>
+<span class="mf">0.0321</span>
+<span class="mf">0.0312</span>
+<span class="mf">0.0294</span>
+<span class="mf">0.0289</span>
+<span class="mf">0.0289</span>
+<span class="mf">0.0280</span>
+<span class="mf">0.0273</span>
+<span class="mf">0.0246</span>
+<span class="mf">0.0237</span>
+<span class="mf">0.0220</span>
+<span class="mf">0.0230</span>
+<span class="mf">0.0199</span>
+<span class="mf">0.0211</span>
+<span class="mf">0.0330</span>
+<span class="mf">0.0453</span>
+<span class="mf">0.0381</span>
+<span class="mf">0.0220</span>
+<span class="mf">0.0329</span>
+<span class="mf">0.0306</span>
+<span class="mf">0.0185</span>
+<span class="mf">0.0136</span>
+<span class="mf">0.0210</span>
+<span class="mf">0.0211</span>
+<span class="mf">0.0166</span>
+<span class="mf">0.0042</span>
+<span class="mf">0.0010</span>
+<span class="mf">0.0044</span>
+<span class="mf">0.0095</span>
+<span class="mf">0.0123</span>
+<span class="mf">0.0110</span>
+<span class="mf">0.0106</span>
+<span class="mf">0.0093</span>
+<span class="mf">0.0068</span>
+<span class="mf">0.0024</span>
+<span class="mf">0.0005</span>
+<span class="mf">0.0002</span>
+<span class="mf">0.0012</span>
+<span class="mf">0.0030</span>
+<span class="mf">0.0037</span>
+<span class="mf">0.0057</span>
+<span class="mf">0.0066</span>
+<span class="mf">0.0060</span>
+<span class="mf">0.0041</span>
+<span class="mf">0.0006</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;C:\Users\beck\AppData\Local\Temp\ipykernel_35040\3436147894.py&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<span class="g g-Whitespace">    </span><span class="mi">0</span><span class="mf">.0145</span>
+         <span class="o">^</span>
+<span class="ne">SyntaxError</span>: invalid syntax
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -616,7 +849,10 @@ Solar constant = 1355 W/m²
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensivity-curve-of-the-human-eye-brightly-adapted">Sensivity curve of the human eye - brightly adapted</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#light-efficiency">Light Efficiency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#light-efficiency">Light Efficiency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now-we-want-to-determine-the-energy-with-parts-of-the-solar-spectrum">Now we want to determine the energy with parts of the solar spectrum</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
