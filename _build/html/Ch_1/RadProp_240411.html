@@ -66,6 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'Ch_1/RadProp_240411';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Point and line light souces" href="240419_PointLineSource.html" />
     <link rel="prev" title="Solid angle" href="SolidAngle_240405.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -162,6 +163,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Planck_240315.html">Planck’s law</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SolidAngle_240405.html">Solid angle</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Photometric Quantities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="240419_PointLineSource.html">Point and line light souces</a></li>
 </ul>
 
     </div>
@@ -464,9 +466,9 @@ See the following sketch!</p>
 <p>Now we want to calculate the illuminance on the working plane P2. The previous drawing is again used for this purpose. Show that the location-dependent illuminance <span class="math notranslate nohighlight">\(E(x, y)\)</span> can be expressed by the following integral</p>
 <div class="math notranslate nohighlight">
 \[
-    E(x_2, y_2) = \int_0^b \int_{h_u}^{h_o} \frac{\text{cos}(\theta_1)\, \text{cos}(\theta_2)}{R^2(x_1, x_2, y_1, y_2, z_1)} dz_1\, dy_1
+    E(x_2, y_2) = L\, \int_0^b \int_{h_u}^{h_o} \frac{\text{cos}(\theta_1)\, \text{cos}(\theta_2)}{R^2(x_1, x_2, y_1, y_2, z_1)} dz_1\, dy_1
 \]</div>
-<p><span class="math notranslate nohighlight">\(R\)</span> is the distance between the two surfaces. <span class="math notranslate nohighlight">\(\theta_1\)</span> and <span class="math notranslate nohighlight">\(\theta_2\)</span> are the angles between the surface normals and the distance vector, respectively.</p>
+<p><span class="math notranslate nohighlight">\(R\)</span> is the distance between the two surfaces. <span class="math notranslate nohighlight">\(\theta_1\)</span> and <span class="math notranslate nohighlight">\(\theta_2\)</span> are the angles between the surface normals and the distance vector, respectively. <span class="math notranslate nohighlight">\(L\)</span> is the luminance of the window.</p>
 </div>
 <section id="solving-the-double-integral">
 <h2>Solving the double-integral<a class="headerlink" href="#solving-the-double-integral" title="Permalink to this heading">#</a></h2>
@@ -490,23 +492,25 @@ See the following sketch!</p>
 
     <span class="k">return</span> <span class="n">integrand</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># depth</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># width</span>
-<span class="n">h</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># max height above working plane</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># depth</span>
+<span class="n">by</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># width</span>
+<span class="n">h</span>  <span class="o">=</span> <span class="mi">2</span> <span class="c1"># max height above working plane</span>
 
 <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">Nx</span><span class="p">)</span> <span class="c1"># discreditation</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">Nx</span><span class="p">)</span> <span class="c1"># discreditation</span>
 <span class="n">y2</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="mi">2</span>
 
+<span class="n">L</span> <span class="o">=</span> <span class="mi">3200</span> <span class="c1"># cd / m²</span>
 <span class="n">res_1D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nx</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">nx</span><span class="p">,</span> <span class="n">xx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x2</span><span class="p">):</span>
-    <span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">dblquad</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">y2</span><span class="p">))</span> <span class="c1"># numerical calculation of the integral</span>
-    <span class="n">res_1D</span><span class="p">[</span><span class="n">nx</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>        
+    <span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">dblquad</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">y2</span><span class="p">))</span> <span class="c1"># numerical calculation of the integral</span>
+    <span class="n">res_1D</span><span class="p">[</span><span class="n">nx</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">L</span>       
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">res_1D</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">res_1D</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">res_1D</span> <span class="p">)</span><span class="c1">#/ max(res_1D))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Daylighting distribution in a shaded room or for an overcast sky&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;relative Illuminance&#39;</span><span class="p">)</span>
+<span class="c1">#plt.ylabel(&#39;relative Illuminance&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Illuminance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;distance from window x / m&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -515,7 +519,30 @@ See the following sketch!</p>
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/a8238b3676b5908da706a75e2839c8b79e699300c1eb56346cc14b0257022cda.png" src="../_images/a8238b3676b5908da706a75e2839c8b79e699300c1eb56346cc14b0257022cda.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_23684</span>\<span class="mf">2105906606.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span> <span class="o">=</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">Nx</span><span class="p">)</span> <span class="c1"># discreditation</span>
+<span class="ne">---&gt; </span><span class="mi">20</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="mi">2</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> 
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="n">L</span> <span class="o">=</span> <span class="mi">3200</span> <span class="c1"># cd / m²</span>
+
+<span class="ne">NameError</span>: name &#39;a&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">res_1D</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">res_1D</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span> <span class="o">*</span> <span class="mi">300</span><span class="p">,</span> <span class="n">res_1D</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">x2</span><span class="p">[</span><span class="mi">59</span><span class="p">],</span> <span class="n">x2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2.0338983050847457, 41.745421764866805, 1159.8066522448398, 5.0, 5.0)
+</pre></div>
+</div>
 </div>
 </div>
 <div class="full-width admonition">
@@ -538,99 +565,40 @@ See the following sketch!</p>
 <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">Nx</span><span class="p">)</span>
 <span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Ny</span><span class="p">)</span>
 
-<span class="n">res_2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">))</span>
+<span class="n">res_2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">nx</span><span class="p">,</span> <span class="n">xx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x2</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">ny</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y2</span><span class="p">):</span>
         <span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">dblquad</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
-        <span class="n">res_2D</span><span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
-
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_2D</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">res_2D</span><span class="p">),</span> <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+        <span class="n">res_2D</span><span class="p">[</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_2D</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">res_2D</span><span class="p">),</span> <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">by</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+<span class="c1">#levels = np.arange(0, 0.9, 0.2)</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">res_2D</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">res_2D</span><span class="p">))</span><span class="c1">#, levels=levels)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;2D Distribution&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;depth&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;width, y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;depth, x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_32888</span>\<span class="mf">767963485.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">for</span> <span class="n">nx</span><span class="p">,</span> <span class="n">xx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x2</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="k">for</span> <span class="n">ny</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y2</span><span class="p">):</span>
-<span class="ne">----&gt; </span><span class="mi">8</span>         <span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">dblquad</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">res_2D</span><span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> 
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">dblquad</span><span class="nt">(func, a, b, gfun, hfun, args, epsabs, epsrel)</span>
-<span class="g g-Whitespace">    </span><span class="mi">600</span> 
-<span class="g g-Whitespace">    </span><span class="mi">601</span>     <span class="k">return</span> <span class="n">nquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="p">[</span><span class="n">temp_ranges</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]],</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">602</span>             <span class="n">opts</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;epsabs&quot;</span><span class="p">:</span> <span class="n">epsabs</span><span class="p">,</span> <span class="s2">&quot;epsrel&quot;</span><span class="p">:</span> <span class="n">epsrel</span><span class="p">})</span>
-<span class="g g-Whitespace">    </span><span class="mi">603</span> 
-<span class="g g-Whitespace">    </span><span class="mi">604</span> 
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">nquad</span><span class="nt">(func, ranges, args, opts, full_output)</span>
-<span class="g g-Whitespace">    </span><span class="mi">823</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">824</span>         <span class="n">opts</span> <span class="o">=</span> <span class="p">[</span><span class="n">opt</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="k">else</span> <span class="n">_OptFunc</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">825</span>     <span class="k">return</span> <span class="n">_NQuad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">full_output</span><span class="p">)</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">826</span> 
-<span class="g g-Whitespace">    </span><span class="mi">827</span> 
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">integrate</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">f</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">integrate</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="n">quad_r</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">full_output</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">880</span>                       <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="n">value</span> <span class="o">=</span> <span class="n">quad_r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">abserr</span> <span class="o">=</span> <span class="n">quad_r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">quad</span><span class="nt">(func, a, b, args, full_output, epsabs, epsrel, limit, points, weight, wvar, wopts, maxp1, limlst)</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span>     <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">351</span>         <span class="n">retval</span> <span class="o">=</span> <span class="n">_quad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">full_output</span><span class="p">,</span> <span class="n">epsabs</span><span class="p">,</span> <span class="n">epsrel</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">352</span>                        <span class="n">points</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">354</span>         <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">_quad</span><span class="nt">(func, a, b, args, full_output, epsabs, epsrel, limit, points)</span>
-<span class="g g-Whitespace">    </span><span class="mi">461</span>     <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">462</span>         <span class="k">if</span> <span class="n">infbounds</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">463</span>             <span class="k">return</span> <span class="n">_quadpack</span><span class="o">.</span><span class="n">_qagse</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">full_output</span><span class="p">,</span><span class="n">epsabs</span><span class="p">,</span><span class="n">epsrel</span><span class="p">,</span><span class="n">limit</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">464</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">465</span>             <span class="k">return</span> <span class="n">_quadpack</span><span class="o">.</span><span class="n">_qagie</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">bound</span><span class="p">,</span><span class="n">infbounds</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">full_output</span><span class="p">,</span><span class="n">epsabs</span><span class="p">,</span><span class="n">epsrel</span><span class="p">,</span><span class="n">limit</span><span class="p">)</span>
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">integrate</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">f</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">integrate</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="n">quad_r</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">full_output</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">880</span>                       <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="n">value</span> <span class="o">=</span> <span class="n">quad_r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">abserr</span> <span class="o">=</span> <span class="n">quad_r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">quad</span><span class="nt">(func, a, b, args, full_output, epsabs, epsrel, limit, points, weight, wvar, wopts, maxp1, limlst)</span>
-<span class="g g-Whitespace">    </span><span class="mi">350</span>     <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">351</span>         <span class="n">retval</span> <span class="o">=</span> <span class="n">_quad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">full_output</span><span class="p">,</span> <span class="n">epsabs</span><span class="p">,</span> <span class="n">epsrel</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">352</span>                        <span class="n">points</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">354</span>         <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">~\miniforge3\envs\Jubook\lib\site-packages\scipy\integrate\quadpack.py</span> in <span class="ni">_quad</span><span class="nt">(func, a, b, args, full_output, epsabs, epsrel, limit, points)</span>
-<span class="g g-Whitespace">    </span><span class="mi">461</span>     <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">462</span>         <span class="k">if</span> <span class="n">infbounds</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">463</span>             <span class="k">return</span> <span class="n">_quadpack</span><span class="o">.</span><span class="n">_qagse</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">full_output</span><span class="p">,</span><span class="n">epsabs</span><span class="p">,</span><span class="n">epsrel</span><span class="p">,</span><span class="n">limit</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">464</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">465</span>             <span class="k">return</span> <span class="n">_quadpack</span><span class="o">.</span><span class="n">_qagie</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="n">bound</span><span class="p">,</span><span class="n">infbounds</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">full_output</span><span class="p">,</span><span class="n">epsabs</span><span class="p">,</span><span class="n">epsrel</span><span class="p">,</span><span class="n">limit</span><span class="p">)</span>
-
-<span class="nn">~\AppData\Local\Temp\ipykernel_32888\67338855.py</span> in <span class="ni">E</span><span class="nt">(z1, y1, x2, y2)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">R_xy</span> <span class="o">=</span> <span class="p">((</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>          <span class="c1"># distance within the xy-plane</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">cos1</span>  <span class="o">=</span> <span class="n">R_xy</span> <span class="o">/</span> <span class="n">R</span>
-<span class="ne">----&gt; </span><span class="mi">9</span>     <span class="n">cos2</span>  <span class="o">=</span> <span class="n">z1</span> <span class="o">/</span> <span class="n">R</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">integrand</span> <span class="o">=</span> <span class="n">cos1</span> <span class="o">*</span> <span class="n">cos2</span> <span class="o">/</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> 
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
+<img alt="../_images/334da1fa9330c9ec64658512dc73932a5919ad505a7b29b50d35aa07d29c4bc5.png" src="../_images/334da1fa9330c9ec64658512dc73932a5919ad505a7b29b50d35aa07d29c4bc5.png" />
 </div>
 </div>
 </section>
@@ -675,6 +643,15 @@ See the following sketch!</p>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Solid angle</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="240419_PointLineSource.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Point and line light souces</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
